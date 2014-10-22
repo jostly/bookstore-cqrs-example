@@ -31,7 +31,7 @@ public class OrderListDenormalizerTest {
     CustomerInformation customerInformation = new CustomerInformation("name", "someone@acme.com", "address");
 
     OrderPlacedEvent event1 = new OrderPlacedEvent(orderId, 0, 1, customerInformation,
-        Collections.<OrderLine>emptyList(), 0);
+        Collections.<OrderLine>emptyList(), 0, 2);
     denormalizer.handleEvent(event1);
 
     OrderActivatedEvent event2 = new OrderActivatedEvent(orderId, 1, 2);
@@ -39,7 +39,7 @@ public class OrderListDenormalizerTest {
 
     Iterator<OrderProjection> iterator = denormalizer.getOrders().iterator();
     OrderProjection order = iterator.next();
-    assertThat(order.getOrderPlacedTimestamp(), is(1L));
+    assertThat(order.getOrderPlacedTimestamp(), is(2L));
     assertThat(order.getStatus(), is(ACTIVATED));
   }
 

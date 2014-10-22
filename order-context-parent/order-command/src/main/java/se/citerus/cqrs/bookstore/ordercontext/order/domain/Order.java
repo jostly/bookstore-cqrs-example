@@ -16,11 +16,11 @@ public class Order extends AggregateRoot<OrderId> {
 
   private OrderStatus status;
 
-  public void place(OrderId orderId, CustomerInformation customerInformation, List<OrderLine> orderLines, long totalAmount) {
+  public void place(OrderId orderId, CustomerInformation customerInformation, List<OrderLine> orderLines, long totalAmount, long customerMillisecondsInEpoch) {
     assertHasNotBeenPlaced();
     assertMoreThanZeroOrderLines(orderLines);
     applyChange(new OrderPlacedEvent(orderId, nextVersion(), now(), toCustomerInformation(customerInformation),
-        toOrderLines(orderLines), totalAmount));
+        toOrderLines(orderLines), totalAmount, customerMillisecondsInEpoch));
   }
 
   public void activate() {

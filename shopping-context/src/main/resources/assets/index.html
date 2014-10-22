@@ -312,7 +312,8 @@ function createOrderRequestJson(cart) {
     "orderId": guid(),
     "customerName": $('#customerName').val(),
     "customerEmail": $('#customerEmail').val(),
-    "customerAddress": $('#customerAddress').val()
+    "customerAddress": $('#customerAddress').val(),
+    "customerMillisecondsInEpoch": new Date().getTime()
   });
 }
 

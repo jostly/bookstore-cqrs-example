@@ -26,4 +26,7 @@ public class PlaceOrderRequest extends TransportObject {
   @NotNull
   public CartDto cart;
 
+  @NotNull
+  public Long customerMillisecondsInEpoch;
+
 }

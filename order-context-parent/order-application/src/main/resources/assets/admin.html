@@ -40,6 +40,7 @@
           <th>OrderId</th>
           <th>Customer</th>
           <th>Total price</th>
+          <th>Order placed on</th>
           <th>Status</th>
           <th style="width: 36px;"></th>
         </tr>
@@ -113,12 +114,14 @@
       var itemId = 'activate-order-' + orderId;
       var customerName = order.customerName;
       var orderAmount = order.orderAmount;
+      var timestamp = new Date(order.orderPlacedTimestamp).toISOString();
       var status = order.status;
       var activationButton = status == 'PLACED' ? '<button class="btn-small btn-success" id="' + itemId + '">Activate</button>' : '';
       $('#list-orders').find("tbody")
           .append('<tr><td>' + orderId + '</td>' +
               '<td>' + customerName + '</td>' +
               '<td>' + orderAmount + '</td>' +
+              '<td>' + timestamp + '</td>' +
               '<td id=status-' + orderId + '>' + status + '</td>' +
               '<td>' + activationButton + ' </td></tr>');
     });

@@ -30,7 +30,7 @@ public class OrdersPerDayAggregatorTest {
 
   private OrderPlacedEvent createOrder(int year, int month, int day) {
     long timestamp = new LocalDate(year, month, day).toDate().getTime();
-    return new OrderPlacedEvent(OrderId.<OrderId>randomId(), 1, timestamp, null, Collections.<OrderLine>emptyList(), 0);
+    return new OrderPlacedEvent(OrderId.<OrderId>randomId(), 1, timestamp, null, Collections.<OrderLine>emptyList(), 0, 0);
   }
 
 }

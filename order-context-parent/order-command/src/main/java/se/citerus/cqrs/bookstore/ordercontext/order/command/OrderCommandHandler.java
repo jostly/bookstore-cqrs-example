@@ -16,7 +16,7 @@ public class OrderCommandHandler implements CommandHandler {
   @Subscribe
   public void handle(PlaceOrderCommand command) {
     Order order = new Order();
-    order.place(command.orderId, command.customerInformation, command.orderLines, command.totalAmount);
+    order.place(command.orderId, command.customerInformation, command.orderLines, command.totalAmount, command.customerMillisecondsInEpoch);
     repository.save(order);
   }
 

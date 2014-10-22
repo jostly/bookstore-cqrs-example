@@ -14,17 +14,20 @@ public class OrderPlacedEvent extends DomainEvent<OrderId> {
   public final CustomerInformation customerInformation;
   public final List<OrderLine> orderLines;
   public final long orderAmount;
+  public final long customerMillisecondsInEpoch;
 
   public OrderPlacedEvent(@JsonProperty("aggregateId") OrderId id,
                           @JsonProperty("version") int version,
                           @JsonProperty("timestamp") long timestamp,
                           @JsonProperty("customerInformation") CustomerInformation customerInformation,
                           @JsonProperty("orderLines") List<OrderLine> orderLines,
-                          @JsonProperty("orderAmount") long orderAmount) {
+                          @JsonProperty("orderAmount") long orderAmount,
+                          @JsonProperty("customerMillisecondsInEpoch") long customerMillisecondsInEpoch) {
     super(id, version, timestamp);
     this.customerInformation = customerInformation;
     this.orderLines = Collections.unmodifiableList(orderLines);
     this.orderAmount = orderAmount;
+    this.customerMillisecondsInEpoch = customerMillisecondsInEpoch;
   }
 
 }

@@ -36,7 +36,7 @@ public class OrderListDenormalizer implements DomainEventListener {
       line.unitPrice = orderLine.unitPrice;
       orderLines.add(line);
     }
-    OrderProjection orderProjection = new OrderProjection(event.aggregateId, event.timestamp,
+    OrderProjection orderProjection = new OrderProjection(event.aggregateId, event.customerMillisecondsInEpoch,
         event.customerInformation.customerName, event.orderAmount, orderLines, PLACED);
     repository.save(orderProjection);
   }

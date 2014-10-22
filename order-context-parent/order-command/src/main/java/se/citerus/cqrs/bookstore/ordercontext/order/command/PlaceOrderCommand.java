@@ -12,21 +12,23 @@ import static com.google.common.base.Preconditions.checkArgument;
 
 public class PlaceOrderCommand extends Command {
 
-  public final OrderId orderId;
-  public final CustomerInformation customerInformation;
-  public final List<OrderLine> orderLines;
-  public final long totalAmount;
+    public final OrderId orderId;
+    public final CustomerInformation customerInformation;
+    public final List<OrderLine> orderLines;
+    public final long totalAmount;
+    public final long customerMillisecondsInEpoch;
 
-  public PlaceOrderCommand(OrderId orderId, CustomerInformation customerInformation, List<OrderLine> orderLines, long totalAmount) {
-    checkArgument(orderId != null, "OrderId cannot be null");
-    checkArgument(customerInformation != null, "CustomerInformation cannot be null");
-    checkArgument(orderLines != null, "Items cannot be null");
-    checkArgument(!orderLines.isEmpty(), "Item list cannot be empty");
-    checkArgument(totalAmount > 0, "Total amount must be > 0");
-    this.orderId = orderId;
-    this.customerInformation = customerInformation;
-    this.orderLines = Collections.unmodifiableList(orderLines);
-    this.totalAmount = totalAmount;
-  }
+    public PlaceOrderCommand(OrderId orderId, CustomerInformation customerInformation, List<OrderLine> orderLines, long totalAmount, long customerMillisecondsInEpoch) {
+        checkArgument(orderId != null, "OrderId cannot be null");
+        checkArgument(customerInformation != null, "CustomerInformation cannot be null");
+        checkArgument(orderLines != null, "Items cannot be null");
+        checkArgument(!orderLines.isEmpty(), "Item list cannot be empty");
+        checkArgument(totalAmount > 0, "Total amount must be > 0");
+        this.orderId = orderId;
+        this.customerInformation = customerInformation;
+        this.orderLines = Collections.unmodifiableList(orderLines);
+        this.totalAmount = totalAmount;
+        this.customerMillisecondsInEpoch = customerMillisecondsInEpoch;
+    }
 
 }

@@ -11,6 +11,7 @@ import se.citerus.cqrs.bookstore.ordercontext.api.PlaceOrderRequest;
 import se.citerus.cqrs.bookstore.ordercontext.query.QueryService;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -43,6 +44,7 @@ public class OrderResourceTest {
     newOrderRequest.customerEmail = "test@example.com";
     newOrderRequest.customerName = "John Doe";
     newOrderRequest.cart = createCart();
+    newOrderRequest.customerMillisecondsInEpoch = new Date().getTime();
     createOrder(newOrderRequest);
   }
 
