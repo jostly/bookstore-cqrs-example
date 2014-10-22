@@ -58,7 +58,7 @@ public class AccumulatedFee extends ValueObject {
     return add.compareTo(limit) >= 0;
   }
 
-  private boolean limitReached() {
+  public boolean limitReached() {
     return accumulatedFee.compareTo(limit) >= 0;
   }
 

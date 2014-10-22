@@ -4,6 +4,7 @@ import org.junit.Test;
 import se.citerus.cqrs.bookstore.ordercontext.order.ProductId;
 import se.citerus.cqrs.bookstore.ordercontext.publishercontract.PublisherContractId;
 import se.citerus.cqrs.bookstore.ordercontext.publishercontract.event.PublisherContractRegisteredEvent;
+import se.citerus.cqrs.bookstore.ordercontext.publishercontract.event.PublisherLimitReachedEvent;
 import se.citerus.cqrs.bookstore.ordercontext.publishercontract.event.PurchaseRegisteredEvent;
 
 import java.util.Iterator;
@@ -62,5 +63,38 @@ public class PublisherContractTest {
     assertThat(purchases.next().feeAmount, is(4000L));
     assertThat(purchases.next().feeAmount, is(0L));
   }
+
+  @Test
+  public void testLimitReached() {
+
+      PublisherContract contract = new PublisherContract();
+      PublisherContractId publisherContractId = PublisherContractId.randomId();
+      contract.register(publisherContractId, "Addison Wesley", 10.0, 10000);
+
+      // Go immediately to limit
+      contract.registerPurchase(ProductId.randomId(), 100000L, 1);
+
+      Iterator<PublisherLimitReachedEvent> limitEvents = filter(contract.getUncommittedEvents(), PublisherLimitReachedEvent.class).iterator();
+      assertThat(limitEvents.next().aggregateId, is(publisherContractId));
+
+  }
+
+
+    @Test
+    public void testLimitReachedOnlyOnce() {
+
+        PublisherContract contract = new PublisherContract();
+        PublisherContractId publisherContractId = PublisherContractId.randomId();
+        contract.register(publisherContractId, "Addison Wesley", 10.0, 10000);
+
+        // Go immediately to limit
+        contract.registerPurchase(ProductId.randomId(), 100000L, 1);
+        contract.registerPurchase(ProductId.randomId(), 100000L, 1);
+
+        Iterator<PublisherLimitReachedEvent> limitEvents = filter(contract.getUncommittedEvents(), PublisherLimitReachedEvent.class).iterator();
+        assertThat(limitEvents.next().aggregateId, is(publisherContractId));
+        assertThat(limitEvents.hasNext(), is(false));
+
+    }
 
 }
