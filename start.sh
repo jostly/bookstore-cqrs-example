@@ -6,6 +6,6 @@ java -jar shopping-context/target/shopping-context-1.0-SNAPSHOT.jar server shopp
 
 mvn -pl product-catalog-context exec:java -Dexec.mainClass="se.citerus.cqrs.bookstore.productcatalog.application.TestProductDataImporter" -Dexec.classpathScope="test"
 
-mvn -pl order-context-parent/order-application exec:java -Dexec.mainClass="se.citerus.cqrs.bookstore.ordercontext.application.TestContractDataImporter" -Dexec.classpathScope="test"
+#mvn -pl order-context-parent/order-application exec:java -Dexec.mainClass="se.citerus.cqrs.bookstore.ordercontext.application.TestContractDataImporter" -Dexec.classpathScope="test"
 
 

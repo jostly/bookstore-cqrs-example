@@ -9,6 +9,7 @@ import se.citerus.cqrs.bookstore.ordercontext.publishercontract.PublisherContrac
 import se.citerus.cqrs.bookstore.ordercontext.query.orderlist.OrderListDenormalizer;
 import se.citerus.cqrs.bookstore.ordercontext.query.orderlist.OrderProjection;
 import se.citerus.cqrs.bookstore.ordercontext.query.sales.OrdersPerDayAggregator;
+import se.citerus.cqrs.bookstore.ordercontext.query.sales.ProfitPerContractAggregator;
 
 import java.util.List;
 import java.util.Map;
@@ -18,13 +19,15 @@ public class QueryService {
   private final OrderListDenormalizer orderListDenormalizer;
   private final OrdersPerDayAggregator ordersPerDayAggregator;
   private final ProductCatalogClient productCatalogClient;
+    private final ProfitPerContractAggregator profitPerContractAggregator;
 
   public QueryService(OrderListDenormalizer orderListDenormalizer,
                       OrdersPerDayAggregator ordersPerDayAggregator,
-                      ProductCatalogClient productCatalogClient) {
+                      ProductCatalogClient productCatalogClient, ProfitPerContractAggregator profitPerContractAggregator) {
     this.orderListDenormalizer = orderListDenormalizer;
     this.ordersPerDayAggregator = ordersPerDayAggregator;
     this.productCatalogClient = productCatalogClient;
+      this.profitPerContractAggregator = profitPerContractAggregator;
   }
 
   public OrderProjection getOrder(OrderId orderId) {
@@ -44,4 +47,7 @@ public class QueryService {
     return ordersPerDayAggregator.getOrdersPerDay();
   }
 
+    public Long getProfit(PublisherContractId contractId) {
+        return profitPerContractAggregator.profit(contractId);
+    }
 }

@@ -25,6 +25,7 @@ import se.citerus.cqrs.bookstore.ordercontext.query.QueryService;
 import se.citerus.cqrs.bookstore.ordercontext.query.orderlist.OrderListDenormalizer;
 import se.citerus.cqrs.bookstore.ordercontext.query.orderlist.OrderProjectionRepository;
 import se.citerus.cqrs.bookstore.ordercontext.query.sales.OrdersPerDayAggregator;
+import se.citerus.cqrs.bookstore.ordercontext.query.sales.ProfitPerContractAggregator;
 import se.citerus.cqrs.bookstore.ordercontext.resource.OrderResource;
 import se.citerus.cqrs.bookstore.ordercontext.resource.PublisherContractResource;
 import se.citerus.cqrs.bookstore.ordercontext.resource.QueryResource;
@@ -55,11 +56,12 @@ public class OrderApplication extends Application<OrderApplicationConfiguration>
     DomainEventBus domainEventBus = new GuavaDomainEventBus();
     OrderListDenormalizer orderListDenormalizer = domainEventBus.register(new OrderListDenormalizer(orderRepository));
     OrdersPerDayAggregator ordersPerDayAggregator = domainEventBus.register(new OrdersPerDayAggregator());
+      ProfitPerContractAggregator profitPerContractAggregator = domainEventBus.register(new ProfitPerContractAggregator());
 
     ProductCatalogClient catalogClient = ProductCatalogClient.create(Client.create(), configuration.productCatalogServiceUrl);
 
     DomainEventStore domainEventStore = (DomainEventStore) configuration.eventStore.newInstance();
-    QueryService queryService = new QueryService(orderListDenormalizer, ordersPerDayAggregator, catalogClient);
+    QueryService queryService = new QueryService(orderListDenormalizer, ordersPerDayAggregator, catalogClient, profitPerContractAggregator);
 
     logger.info("Using eventStore: " + domainEventStore.getClass().getName());
     Repository aggregateRepository = new DefaultRepository(domainEventBus, domainEventStore);
